@@ -1,4 +1,4 @@
-export interface Registro {
+export interface Articulos {
     id: number,
     codigo: string,
     nombre: string,
