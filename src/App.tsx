@@ -1,11 +1,16 @@
-
+import {BrowserRouter } from 'react-router-dom';
+import Navbar from './app/navbar/Navbar';
+import RouterConfig from './app/routerconfig/RouterConfig';
 
 function App() {
 
 
   return (
     <>
-      <h2>Hello world</h2>
+      <BrowserRouter>
+        <Navbar />
+        <RouterConfig />
+      </BrowserRouter>
     </>
   )
 }
