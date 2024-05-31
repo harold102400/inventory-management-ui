@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { createProduct } from "../../hooks/apiFunctions";
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
-import { useState } from "react";
+
 
 const Create = () => {
 
@@ -19,7 +19,6 @@ const Create = () => {
     <div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-           {/*    <input type="hidden" {...register("id")}/>     */}  
               <input type="text" placeholder="codigo"  {...register("codigo", { required: true })} />
               {errors.codigo && <span>This field is required</span>}
 

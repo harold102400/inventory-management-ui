@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, Link } from "react-router-dom"
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import { editProduct } from "../../hooks/apiFunctions";
 
@@ -60,7 +60,8 @@ const Edit = () => {
           defaultValue={productData.precio.toString()}
         />
         {errors.precio && <span>This field is required</span>}
-        <button type="submit">Editar curso</button>
+        <button type="submit" className="btn btn-success">Editar curso</button>
+        <Link to={`/productdetail/${productData.id}`} className="btn btn-danger">Cancelar</Link>
       </form>
     </div>
   )
