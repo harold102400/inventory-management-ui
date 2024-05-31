@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import notFound from "../../../assets/notfound.png";
 import Create from "../create/Create";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../hooks/apiFunctions";
+import { getProducts } from "../../services/apiFunctions";
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import './Home.css';
 

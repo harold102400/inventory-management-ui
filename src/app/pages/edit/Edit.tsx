@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, Link } from "react-router-dom"
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
-import { editProduct } from "../../hooks/apiFunctions";
+import { editProduct } from "../../services/apiFunctions";
 
 const Edit = () => {
 

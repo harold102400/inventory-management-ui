@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteProduct, getProductByCategory } from "../../hooks/apiFunctions"
+import { deleteProduct, getProductByCategory } from "../../services/apiFunctions"
 import { useParams, useNavigate } from "react-router-dom"
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import "../home/Home.css"
