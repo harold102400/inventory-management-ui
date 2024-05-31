@@ -2,7 +2,7 @@ import { Articulos } from "../interfaces/articulosinterface/Articulos";
 
 const API_URL = import.meta.env.VITE_API_URL
 
-async function getProducts() : Promise<Articulos[]>
+export async function getProducts() : Promise<Articulos[]>
 {
     try {
         const res = await fetch(API_URL, {
@@ -18,7 +18,7 @@ async function getProducts() : Promise<Articulos[]>
     }
 }
 
-async function getProductByCategory(id: number) : Promise<Articulos[]>
+export async function getProductByCategory(id: number) : Promise<Articulos[]>
 {
     try {
         const res = await fetch(`${API_URL}/${id}`, {
@@ -34,7 +34,7 @@ async function getProductByCategory(id: number) : Promise<Articulos[]>
     }
 }
 
-async function createProduct(data: Articulos) : Promise<Articulos[]>
+export async function createProduct(data: Articulos) : Promise<Articulos[]>
 {
     try {
         const res = await fetch(API_URL, {
@@ -47,6 +47,7 @@ async function createProduct(data: Articulos) : Promise<Articulos[]>
         
         if (res.ok) {
             console.log('producto creado');
+            console.log(res.statusText)
         }
         return res.json();
     } catch (error) {
@@ -54,10 +55,10 @@ async function createProduct(data: Articulos) : Promise<Articulos[]>
     }
 }
 
-async function editProduct(data: Articulos) : Promise<Articulos[]>
+export async function editProduct(data: Articulos, id: number) : Promise<Articulos[]>
 {
     try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(`${API_URL}/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
@@ -73,10 +74,10 @@ async function editProduct(data: Articulos) : Promise<Articulos[]>
     }
 }
 
-async function deleteProduct() : Promise<void>
+export async function deleteProduct(id: number) : Promise<void>
 {
     try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type" : "application/json",
