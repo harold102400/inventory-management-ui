@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteProduct, getProductByCategory } from "../../services/apiFunctions"
+import { deleteProduct, getProductById } from "../../services/apiFunctions"
 import { useParams, useNavigate } from "react-router-dom"
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import "../home/Home.css"
@@ -10,12 +10,13 @@ const ProductDetail = () => {
   const { id } = useParams();
   const parsedId = Number(id);
   
-  const [product, setProduct] = useState<Articulos[] | null>(null)
+  //Actualizado el useState con Articulos solamente ya que es un objecto de un solo articulo
+  const [product, setProduct] = useState<Articulos | null>(null)
   const [isLoading, setisLoading] = useState<boolean>(true)
 
   useEffect(() => {
     async function data() {
-      const product = await getProductByCategory(parsedId);
+      const product = await getProductById(parsedId);
       setProduct(product);
       setisLoading(false);
     }

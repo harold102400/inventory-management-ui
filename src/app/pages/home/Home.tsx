@@ -8,7 +8,7 @@ import './Home.css';
 
 const Home = () => {
 
-  const [products, setProducts] = useState<Articulos[] | null>(null);
+  const [products, setProducts] = useState<Articulos[] >([]);
   const [isLoading, setIsloading] = useState<Boolean>(true);
 
 
@@ -24,9 +24,13 @@ const Home = () => {
 
   }, [])
 
+  function handleNewProduct(product: Articulos) {
+    setProducts([...products, product]);
+  }
+
   return (
     <div className="table_container">
-      <Create />
+      <Create handleNewProduct={handleNewProduct}/>
       {products && !isLoading && products.length === 0 && (
         <div>
           <img src={notFound} alt="No se encontraron articulos" />

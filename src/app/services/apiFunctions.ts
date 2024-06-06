@@ -1,6 +1,7 @@
 import { Articulos } from "../interfaces/articulosinterface/Articulos";
 
 const API_URL = import.meta.env.VITE_API_URL
+console.log(API_URL)
 
 export async function getProducts() : Promise<Articulos[]>
 {
@@ -18,7 +19,7 @@ export async function getProducts() : Promise<Articulos[]>
     }
 }
 
-export async function getProductByCategory(id: number) : Promise<Articulos[]>
+export async function getProductById(id: number) : Promise<Articulos>
 {
     try {
         const res = await fetch(`${API_URL}/${id}`, {
@@ -34,7 +35,7 @@ export async function getProductByCategory(id: number) : Promise<Articulos[]>
     }
 }
 
-export async function createProduct(data: Articulos) : Promise<Articulos[]>
+export async function createProduct(data: Articulos) : Promise<Articulos>
 {
     try {
         const res = await fetch(API_URL, {
@@ -49,13 +50,14 @@ export async function createProduct(data: Articulos) : Promise<Articulos[]>
             console.log('producto creado');
             console.log(res.statusText)
         }
-        return res.json();
+        const body = await res.json();
+        return body.message;
     } catch (error) {
         return Promise.reject(error);
     }
 }
 
-export async function editProduct(data: Articulos, id: number) : Promise<Articulos[]>
+export async function editProduct(data: Articulos, id: number) : Promise<void>
 {
     try {
         const res = await fetch(`${API_URL}/${id}`, {
@@ -68,7 +70,6 @@ export async function editProduct(data: Articulos, id: number) : Promise<Articul
         if (res.ok) {
             console.log('producto editado');
         }
-        return res.json();
     } catch (error) {
         return Promise.reject(error);
     }

@@ -4,14 +4,17 @@ import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import './Create.css'
 
 
-const Create = () => {
+const Create = ({handleNewProduct} : {handleNewProduct: (product: Articulos) => void}) => {
 
 
-  const {register, handleSubmit, formState: {errors}} = useForm<Articulos>();
+  const {register, handleSubmit, formState: {errors}, reset} = useForm<Articulos>();
   //const [isPending, setisPending] = useState<boolean>(false)
   
   async function onSubmit(data:Articulos) {
-    await createProduct(data);
+    const product = await createProduct(data);
+    handleNewProduct(product);
+    reset()
+    return product;
     //setisPending(false);
   }
   
