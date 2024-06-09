@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, Link } from "react-router-dom"
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import { editProduct } from "../../services/apiFunctions";
+import "../create/Form.css";
 
 const Edit = () => {
 
@@ -20,7 +21,9 @@ const Edit = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="form_create">
+        <div className="form_control">
+        <label>Codigo</label>
         <input
           type="text"
           placeholder="codigo"
@@ -28,7 +31,10 @@ const Edit = () => {
           defaultValue={productData.codigo}
         />
         {errors.codigo && <span>This field is required</span>}
+        </div>
 
+        <div className="form_control">
+        <label>Nombre</label>
         <input
           type="text"
           placeholder="nombre"
@@ -36,7 +42,10 @@ const Edit = () => {
           defaultValue={productData.nombre}
         />
         {errors.nombre && <span>This field is required</span>}
+        </div>
 
+        <div className="form_control">
+        <label>Tipo</label>
         <input
           type="text"
           placeholder="tipo"
@@ -44,7 +53,10 @@ const Edit = () => {
           defaultValue={productData.tipo}
         />
         {errors.tipo && <span>This field is required</span>}
+        </div>
 
+        <div className="form_control">
+        <label>Marca</label>
         <input
           type="text"
           placeholder="marca"
@@ -52,7 +64,10 @@ const Edit = () => {
           defaultValue={productData.marca}
         />
         {errors.marca && <span>This field is required</span>}
+        </div>
 
+        <div className="form_control">
+        <label>Precio</label>
         <input
           type="number"
           placeholder="precio"
@@ -60,6 +75,8 @@ const Edit = () => {
           defaultValue={productData.precio.toString()}
         />
         {errors.precio && <span>This field is required</span>}
+        </div>
+
         <button type="submit" className="btn btn-success">Editar curso</button>
         <Link to={`/productdetail/${productData.id}`} className="btn btn-danger">Cancelar</Link>
       </form>

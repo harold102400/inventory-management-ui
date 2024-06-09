@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { createProduct } from "../../services/apiFunctions";
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
-import './Create.css'
+import './Form.css'
 
 
 const Create = ({handleNewProduct} : {handleNewProduct: (product: Articulos) => void}) => {
