@@ -4,12 +4,23 @@ import Create from "../create/Create";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/apiFunctions";
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
+import ReactPaginate from "react-paginate";
 import './Home.css';
 
 const Home = () => {
 
   const [products, setProducts] = useState<Articulos[] >([]);
   const [isLoading, setIsloading] = useState<Boolean>(true);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const usersPerPage = 3;
+  const pagesVisited = pageNumber * usersPerPage;
+
+  const pageCount = Math.ceil(products.length / usersPerPage);
+
+  const changePage = ({ selected } : {selected: number}) => {
+    setPageNumber(selected);
+  };
 
 
   useEffect(() => {
@@ -52,7 +63,9 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {products
+            .slice(pagesVisited, pagesVisited + usersPerPage)
+            .map((product) => (
               <tr key={product.id}>
                 <th scope="row">{product.id}</th>
                 <td>{product.codigo}</td>
@@ -64,6 +77,17 @@ const Home = () => {
           </tbody>
         </table>
       )}
+      <ReactPaginate
+         previousLabel={"Previous"}
+         nextLabel={"Next"}
+         pageCount={pageCount}
+         onPageChange={changePage}
+         containerClassName={"paginationBttns"}
+         previousLinkClassName={"previousBttn"}
+         nextLinkClassName={"nextBttn"}
+         disabledClassName={"paginationDisabled"}
+         activeClassName={"paginationActive"}
+       />
     </div>
   );
 };
