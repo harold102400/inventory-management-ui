@@ -5,3 +5,8 @@ body {
   font-family: 'Poppins';
   text-align: center !important;
 }
+
+#root {
+  position:relative;
+  min-height: 100vh;
+}
