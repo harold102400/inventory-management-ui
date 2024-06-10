@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import notFound from "../../../assets/notfound.png";
 import Create from "../create/Create";
 import { useEffect, useState } from "react";
@@ -11,28 +11,25 @@ const Home = () => {
 
   const [products, setProducts] = useState<Articulos[] >([]);
   const [isLoading, setIsloading] = useState<Boolean>(true);
-  const [pageNumber, setPageNumber] = useState(0);
-
-  const usersPerPage = 3;
-  const pagesVisited = pageNumber * usersPerPage;
-
-  const pageCount = Math.ceil(products.length / usersPerPage);
+  const [pageCount, setPageCount] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams({page : '1', limit: '10' });
 
   const changePage = ({ selected } : {selected: number}) => {
-    setPageNumber(selected);
+    setSearchParams({page:String(selected+1), limit : '10'});
+    getPaginatedProducts(selected+1, 10);
   };
 
+  const getPaginatedProducts = async (page:number, limit: number) => 
+  {
+      const allProducts = await getProducts(page, limit);
+      setProducts(allProducts.data);
+      setPageCount(Math.ceil(allProducts.totalCount/allProducts.limit))
+      setSearchParams({page : String(allProducts.page), limit : String(allProducts.limit)})
+      setIsloading(false);
+  } 
 
   useEffect(() => {
-    const data = async () => 
-      {
-          const allProducts = await getProducts();
-          setProducts(allProducts);
-          setIsloading(false);
-      }   
-
-      data();
-
+    getPaginatedProducts(Number(searchParams.get("page")), Number(searchParams.get("limit")));
   }, [])
 
   function handleNewProduct(product: Articulos) {
@@ -64,7 +61,6 @@ const Home = () => {
           </thead>
           <tbody>
             {products
-            .slice(pagesVisited, pagesVisited + usersPerPage)
             .map((product) => (
               <tr key={product.id}>
                 <th scope="row">{product.id}</th>

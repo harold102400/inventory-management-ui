@@ -1,12 +1,14 @@
 import { Articulos } from "../interfaces/articulosinterface/Articulos";
+import { PaginatedProducts } from "../interfaces/paginatedproducts/paginatedProducts";
+
 
 const API_URL = import.meta.env.VITE_API_URL
 console.log(API_URL)
 
-export async function getProducts() : Promise<Articulos[]>
+export async function getProducts(page:number, limit: number) : Promise<PaginatedProducts>
 {
     try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(`${API_URL}/?page=${page}&limit=${limit}`, {
             headers: {
                 "Content-Type" : "application/json",
             }
