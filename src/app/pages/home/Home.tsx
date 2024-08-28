@@ -5,28 +5,49 @@ import { useEffect, useState } from "react";
 import { getProducts } from "../../services/apiFunctions";
 import { Articulos } from "../../interfaces/articulosinterface/Articulos";
 import ReactPaginate from "react-paginate";
+import { Hourglass } from 'react-loader-spinner';
+import Swal from "sweetalert2";
 import './Home.css';
 
 const Home = () => {
 
-  const [products, setProducts] = useState<Articulos[] >([]);
+  const [products, setProducts] = useState<Articulos[]>([]);
   const [isLoading, setIsloading] = useState<Boolean>(true);
   const [pageCount, setPageCount] = useState(0);
-  const [searchParams, setSearchParams] = useSearchParams({page : '1', limit: '10' });
+  const [searchParams, setSearchParams] = useSearchParams({ page: '1', limit: '10' });
+  const mySwal = Swal;
 
-  const changePage = ({ selected } : {selected: number}) => {
-    setSearchParams({page:String(selected+1), limit : '10'});
-    getPaginatedProducts(selected+1, 10);
+  function handleError(message:string){
+    return mySwal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: message,
+      confirmButtonColor: "#000",
+      confirmButtonText: "Okay!",
+      footer: '<a href="#">Why do I have this issue?</a>'
+    })
+  }
+
+  const changePage = ({ selected }: { selected: number }) => {
+    setSearchParams({ page: String(selected + 1), limit: '10' });
+    getPaginatedProducts(selected + 1, 10);
   };
 
-  const getPaginatedProducts = async (page:number, limit: number) => 
-  {
+  const getPaginatedProducts = async (page: number, limit: number) => {
+    try {
       const allProducts = await getProducts(page, limit);
       setProducts(allProducts.data);
-      setPageCount(Math.ceil(allProducts.totalCount/allProducts.limit))
-      setSearchParams({page : String(allProducts.page), limit : String(allProducts.limit)})
+      setPageCount(Math.ceil(allProducts.totalCount / allProducts.limit))
+      setSearchParams({ page: String(allProducts.page), limit: String(allProducts.limit) })
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        handleError(error.message);
+      }
+    } finally {
       setIsloading(false);
-  } 
+    }
+  }
 
   useEffect(() => {
     getPaginatedProducts(Number(searchParams.get("page")), Number(searchParams.get("limit")));
@@ -38,15 +59,30 @@ const Home = () => {
 
   return (
     <div className="table_container">
-      <Create handleNewProduct={handleNewProduct}/>
+      <Create handleNewProduct={handleNewProduct} />
       {products && !isLoading && products.length === 0 && (
         <div>
           <img src={notFound} alt="No se encontraron articulos" />
           <h1>No se encontraron articulos</h1>
+          <br></br>
         </div>
       )}
 
-      {isLoading && <div>Cargando...</div>}
+      {isLoading && <div>
+        <div className="spinning_container">
+          <p>Loading...</p>
+            <Hourglass
+            visible={true}
+            height="50"
+            width="50"
+            ariaLabel="hourglass-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            colors={['#000', '#ddcbb7']}
+            />
+        </div>
+
+      </div>}
 
       {products && !isLoading && products.length > 0 && (
         <table className="table">
@@ -61,29 +97,29 @@ const Home = () => {
           </thead>
           <tbody>
             {products
-            .map((product) => (
-              <tr key={product.id}>
-                <th scope="row">{product.id}</th>
-                <td>{product.codigo}</td>
-                <td>{product.nombre}</td>
-                <td>{product.tipo}</td>
-                <td><Link to={`/productdetail/${product.id}`} className="btn btn-dark">Ver mas detalles</Link></td>
-              </tr>
-            ))}
+              .map((product) => (
+                <tr key={product.id}>
+                  <th scope="row">{product.id}</th>
+                  <td>{product.codigo}</td>
+                  <td>{product.nombre}</td>
+                  <td>{product.tipo}</td>
+                  <td><Link to={`/productdetail/${product.id}`} className="btn btn-dark">Ver mas detalles</Link></td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}
       <ReactPaginate
-         previousLabel={"Previous"}
-         nextLabel={"Next"}
-         pageCount={pageCount}
-         onPageChange={changePage}
-         containerClassName={"paginationBttns"}
-         previousLinkClassName={"previousBttn"}
-         nextLinkClassName={"nextBttn"}
-         disabledClassName={"paginationDisabled"}
-         activeClassName={"paginationActive"}
-       />
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginationBttns"}
+        previousLinkClassName={"previousBttn"}
+        nextLinkClassName={"nextBttn"}
+        disabledClassName={"paginationDisabled"}
+        activeClassName={"paginationActive"}
+      />
     </div>
   );
 };

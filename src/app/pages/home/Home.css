@@ -23,7 +23,7 @@
 }
 
 .paginationBttns {
-    width: 80%;
+    width: 90%;
     height: 40px;
     list-style: none;
     display: flex;
@@ -52,4 +52,8 @@
   .paginationDisabled a {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 0);
+  }
+
+  .spinning_container {
+    margin-bottom: 32px;
   }
