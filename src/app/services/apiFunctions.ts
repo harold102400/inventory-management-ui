@@ -3,12 +3,11 @@ import { PaginatedProducts } from "../interfaces/paginatedproducts/paginatedProd
 
 
 const API_URL = import.meta.env.VITE_API_URL
-console.log(API_URL)
 
-export async function getProducts(page:number, limit: number) : Promise<PaginatedProducts>
+export async function getProducts(page:number, limit: number, searchProduct: string = "") : Promise<PaginatedProducts>
 {
     try {
-        const res = await fetch(`${API_URL}/?page=${page}&limit=${limit}`, {
+        const res = await fetch(`${API_URL}/?page=${page}&limit=${limit}&search=${searchProduct}`, {
             headers: {
                 "Content-Type" : "application/json",
             }
