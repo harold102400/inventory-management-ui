@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { deleteProduct, getProductById } from "../../services/apiFunctions"
 import { useParams, useNavigate } from "react-router-dom"
-import { Articulos } from "../../interfaces/articulosinterface/Articulos";
+import { Products } from "../../interfaces/productsinterface/Products";
 import "../home/Home.css"
 
 
@@ -11,7 +11,7 @@ const ProductDetail = () => {
   const parsedId = Number(id);
   
   //Actualizado el useState con Articulos solamente ya que es un objecto de un solo articulo
-  const [product, setProduct] = useState<Articulos | null>(null)
+  const [product, setProduct] = useState<Products | null>(null)
   const [isLoading, setisLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const ProductDetail = () => {
     data();
   }, [])
   
-  async function handleDelete() {
+  const handleDelete =async () => {
       await deleteProduct(parsedId)
       navigate('/')
   }
@@ -43,19 +43,19 @@ const ProductDetail = () => {
     <div>
       {product ? (
       <div className="table_container">
-        <p className="product_title"><strong>Código:</strong> {product.codigo}</p>
-        <p className="product_title"><strong>Marca:</strong> {product.marca}</p>
-        <p className="product_title"><strong>Nombre:</strong> {product.nombre}</p>
-        <p className="product_title"><strong>Precio:</strong> {product.precio}</p>
-        <p className="product_title"><strong>Tipo:</strong> {product.tipo}</p>
-          <h2 className="button_title">Acciones</h2>
+        <p className="product_title"><strong>Code:</strong> {product.code}</p>
+        <p className="product_title"><strong>Brand:</strong> {product.brand}</p>
+        <p className="product_title"><strong>Name:</strong> {product.name}</p>
+        <p className="product_title"><strong>Price:</strong> {product.price}</p>
+        <p className="product_title"><strong>Type:</strong> {product.type}</p>
+          <h2 className="button_title">Actions</h2>
         <div className="button_container">
-          <button className="btn btn-warning" onClick={handleEdit}>Editar</button>
-          <button className="btn btn-danger" onClick={handleDelete}>Borrar</button>
+          <button className="btn btn-warning" onClick={handleEdit}>Edit</button>
+          <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
         </div>
       </div>
     ) : (
-      isLoading && <div>Cargando...</div>
+      isLoading && <div>Loading...</div>
     )}
     </div>
   )

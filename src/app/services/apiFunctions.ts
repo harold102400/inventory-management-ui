@@ -1,10 +1,10 @@
-import { Articulos } from "../interfaces/articulosinterface/Articulos";
+import { Products } from "../interfaces/productsinterface/Products";
 import { PaginatedProducts } from "../interfaces/paginatedproducts/paginatedProducts";
 
 
 const API_URL = import.meta.env.VITE_API_URL
 
-export async function getProducts(page:number, limit: number, searchProduct: string = "") : Promise<PaginatedProducts>
+export async function getProducts(page:number, limit: number, searchProduct: string = "") : Promise<PaginatedProducts<Products[]>>
 {
     try {
         const res = await fetch(`${API_URL}/?page=${page}&limit=${limit}&search=${searchProduct}`, {
@@ -20,7 +20,7 @@ export async function getProducts(page:number, limit: number, searchProduct: str
     }
 }
 
-export async function getProductById(id: number) : Promise<Articulos>
+export async function getProductById(id: number) : Promise<Products>
 {
     try {
         const res = await fetch(`${API_URL}/${id}`, {
@@ -36,7 +36,7 @@ export async function getProductById(id: number) : Promise<Articulos>
     }
 }
 
-export async function createProduct(data: Articulos) : Promise<Articulos>
+export async function createProduct(data: Products) : Promise<Products>
 {
     try {
         const res = await fetch(API_URL, {
@@ -58,7 +58,7 @@ export async function createProduct(data: Articulos) : Promise<Articulos>
     }
 }
 
-export async function editProduct(data: Articulos, id: number) : Promise<void>
+export async function editProduct(data: Products, id: number) : Promise<void>
 {
     try {
         const res = await fetch(`${API_URL}/${id}`, {

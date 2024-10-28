@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, Link } from "react-router-dom"
-import { Articulos } from "../../interfaces/articulosinterface/Articulos";
+import { Products } from "../../interfaces/productsinterface/Products";
 import { editProduct } from "../../services/apiFunctions";
 import "../create/Form.css";
 
@@ -12,9 +12,9 @@ const Edit = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Articulos>();
+  } = useForm<Products>();
   const navigate = useNavigate();
-  function onSubmit(data: Articulos) {
+  function onSubmit(data: Products) {
     editProduct(data, productData.id);
     navigate(`/productdetail/${productData.id}`);
   }
@@ -23,62 +23,62 @@ const Edit = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="form_create">
         <div className="form_control">
-        <label>Codigo</label>
+        <label>Code</label>
         <input
           type="text"
-          placeholder="codigo"
-          {...register("codigo", { required: true })}
-          defaultValue={productData.codigo}
+          placeholder="code"
+          {...register("code", { required: true })}
+          defaultValue={productData.code}
         />
-        {errors.codigo && <span>This field is required</span>}
+        {errors.code && <span>This field is required</span>}
         </div>
 
         <div className="form_control">
-        <label>Nombre</label>
+        <label>Name</label>
         <input
           type="text"
-          placeholder="nombre"
-          {...register("nombre", { required: true })}
-          defaultValue={productData.nombre}
+          placeholder="name"
+          {...register("name", { required: true })}
+          defaultValue={productData.name}
         />
-        {errors.nombre && <span>This field is required</span>}
+        {errors.name && <span>This field is required</span>}
         </div>
 
         <div className="form_control">
-        <label>Tipo</label>
+        <label>Type</label>
         <input
           type="text"
-          placeholder="tipo"
-          {...register("tipo", { required: true })}
-          defaultValue={productData.tipo}
+          placeholder="type"
+          {...register("type", { required: true })}
+          defaultValue={productData.type}
         />
-        {errors.tipo && <span>This field is required</span>}
+        {errors.type && <span>This field is required</span>}
         </div>
 
         <div className="form_control">
-        <label>Marca</label>
+        <label>Brand</label>
         <input
           type="text"
-          placeholder="marca"
-          {...register("marca", { required: true })}
-          defaultValue={productData.marca}
+          placeholder="brand"
+          {...register("brand", { required: true })}
+          defaultValue={productData.brand}
         />
-        {errors.marca && <span>This field is required</span>}
+        {errors.brand && <span>This field is required</span>}
         </div>
 
         <div className="form_control">
-        <label>Precio</label>
+        <label>Price</label>
         <input
           type="number"
-          placeholder="precio"
-          {...register("precio", { required: true })}
-          defaultValue={productData.precio.toString()}
+          placeholder="price"
+          {...register("price", { required: true })}
+          defaultValue={productData.price.toString()}
         />
-        {errors.precio && <span>This field is required</span>}
+        {errors.price && <span>This field is required</span>}
         </div>
 
-        <button type="submit" className="btn btn-success">Editar curso</button>
-        <Link to={`/productdetail/${productData.id}`} className="btn btn-danger">Cancelar</Link>
+        <button type="submit" className="btn btn-success">Edit product</button>
+        <Link to={`/productdetail/${productData.id}`} className="btn btn-danger">Cancel</Link>
       </form>
     </div>
   )

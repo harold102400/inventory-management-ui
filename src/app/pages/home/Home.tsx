@@ -3,14 +3,14 @@ import notFound from "../../../assets/notfound.png";
 import Create from "../create/Create";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../services/apiFunctions";
-import { Articulos } from "../../interfaces/articulosinterface/Articulos";
+import { Products } from "../../interfaces/productsinterface/Products";
 import ReactPaginate from "react-paginate";
 import { Hourglass } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import "./Home.css";
 
 const Home = () => {
-  const [products, setProducts] = useState<Articulos[]>([]);
+  const [products, setProducts] = useState<Products[]>([]);
   const [isLoading, setIsloading] = useState<Boolean>(true);
   const [pageCount, setPageCount] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams({
@@ -66,7 +66,7 @@ const Home = () => {
     getPaginatedProducts(1, 10, search);
   }, [search]);
 
-  function handleNewProduct(product: Articulos) {
+  function handleNewProduct(product: Products) {
     setProducts([...products, product]);
   }
 
@@ -78,14 +78,14 @@ const Home = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="busca un articulo"
+              placeholder="Search..."
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
       {products && !isLoading && products.length === 0 && (
         <div>
-          <img src={notFound} alt="No se encontraron articulos" />
-          <h1>No se encontraron articulos</h1>
+          <img src={notFound} alt="No products founds" />
+          <h1>No products found</h1>
           <br></br>
         </div>
       )}
@@ -113,25 +113,25 @@ const Home = () => {
             <thead className="thead-dark">
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">codigo</th>
-                <th scope="col">nombre</th>
-                <th scope="col">tipo</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
                 <tr key={product.id}>
                   <th scope="row">{product.id}</th>
-                  <td>{product.codigo}</td>
-                  <td>{product.nombre}</td>
-                  <td>{product.tipo}</td>
+                  <td>{product.code}</td>
+                  <td>{product.name}</td>
+                  <td>{product.type}</td>
                   <td>
                     <Link
                       to={`/productdetail/${product.id}`}
                       className="btn btn-dark"
                     >
-                      Ver mas detalles
+                      See more details
                     </Link>
                   </td>
                 </tr>

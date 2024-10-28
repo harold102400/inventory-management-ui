@@ -18,7 +18,7 @@ const Navbar = () => {
   </div>
   <ul className={menuOpen ? "open" : ""}>
     <li>
-      <NavLink to="/contactus">Contactame</NavLink>
+      <NavLink to="/contactus">Contact me</NavLink>
     </li>
   </ul>
  </nav>

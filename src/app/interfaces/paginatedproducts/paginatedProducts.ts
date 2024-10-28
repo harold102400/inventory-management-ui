@@ -1,11 +1,8 @@
-import { Articulos } from "../articulosinterface/Articulos";
-
-export interface PaginatedProducts {
-    "data" : Articulos[],
+export type PaginatedProducts<T> = {
+    "data" : T,
     "totalCount" : number,
     "page" : number,
     "limit" : number
-
 }
 
  
